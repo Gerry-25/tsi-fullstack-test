@@ -92,3 +92,4 @@ app.use('/users',userRoute);
 app.use('/stat',statRoute);
 app.use('/game',gameRoute);
 app.use('/teams',teamInfoRoute);
+app.use('/players',playerRoute);
