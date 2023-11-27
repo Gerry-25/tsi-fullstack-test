@@ -7,8 +7,8 @@ const dotenv = require('dotenv');
 const nodemailer = require('nodemailer');
 dotenv.config();
 
-function generateAccessToken(id,username) {
-  return jwt.sign(id,username, process.env.TOKEN_SECRET, { expiresIn: '70000s' });
+function generateAccessToken(id) {
+  return jwt.sign(id, process.env.TOKEN_SECRET, { expiresIn: '70000s' });
 };
 
 const transporter = nodemailer.createTransport({
@@ -38,7 +38,7 @@ router.get('/validateCompte/:code',async(req,res) => {
   const code = req.params.code;
   const account = await UserModel.findOne({ code: code});
   if(account){
-    account.is_active = true;
+    account.isActive = true;
     await account.save();
     res.send({status:200, message:"Compte activate with success"});
   } else {
@@ -47,7 +47,7 @@ router.get('/validateCompte/:code',async(req,res) => {
 });
 
 router.post('/register',async(req,res) => {
-  const {username, nom , prenom , telephone, ville, quartier,email, password, confirmPassword, role} = req.body;
+  const {username, firstName , lastName , phoneNumber, town, neighborhood,email, password, confirmPassword, role} = req.body;
   const oldUser = await UserModel.findOne({email: email}).exec();
   if(oldUser)
   {
@@ -61,24 +61,24 @@ router.post('/register',async(req,res) => {
       newUser = new UserModel({
         username: username,
         email: email,
-        nom: nom,
-        prenom: prenom,
+        firstName: firstName,
+        lastName: lastName,
         password: hash_pass,
-        telephone: telephone,
-        ville: ville,
-        quartier: quartier,
+        phoneNumber: phoneNumber,
+        town: town,
+        neighborhood: neighborhood,
         role: role,
         code: randomCode,
      // profil_picture: `${__dirname}/photos/${UFileName}`,
-        created_at: new Date(),
-        is_deleted: null,
-        is_active: false,
+        createdAt: new Date(),
+        isDeleted: null,
+        isActive: false,
       });
       await newUser.save();
       const mailData = {
-        from: 'ProGaming',
+        from: 'TSI-PlayerManagement',
         to: email,
-        subject: 'Url activation du compte proGaming',
+        subject: 'Url for activating your account',
         text: randomCode,
         html: 'http://localhost:3005/auth/validateCompte/' + randomCode,
     };
@@ -99,18 +99,18 @@ router.post('/login',async (req,res)=>{
     const {email,password} = req.body;
     const user = await UserModel.findOne({email}).exec();
     if (!user) {
-        res.send({statut:404 ,message: "User not found"});
+        res.send({status:404 ,message: "User not found"});
     }    
     if (user){
-      if (user.is_active == false) {
-        res.send({statut: 404,message: "User not activate"});
+      if (user.isActive == false) {
+        res.send({status: 404,message: "User not activate"});
     } else {
       const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        res.send({statut:404, message: "Bad credential"});
+        res.send({status:404, message: "Bad credential"});
     } else {
   const token = generateAccessToken({id: user.id},{username: user.username});
-    res.send({statut:200,message: "Login with succes",token, user});
+    res.send({status:200,message: "Login with succes",token, user});
         }
       }
     }
@@ -118,7 +118,7 @@ router.post('/login',async (req,res)=>{
 
 router.get('/logout',(req, res)=>{
         req.user = null;
-        res.send({statut:200,message: "Deconnect with success"});
+        res.send({status:200,message: "Deconnect with success"});
 });
 
 module.exports = router;

@@ -13,12 +13,12 @@ const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 const dotenv = require('dotenv');
 dotenv.config();
-const authRoute = require('./services/auth');
-const userRoute = require('./services/users_services');
-const teamInfoRoute = require('./services/teamInfo_services');
-const statRoute = require('./services/stat_services');
-const playerRoute = require('./services/player_services');
-const gameRoute = require('./services/game_services');
+const authRoute = require('./Services/auth');
+const userRoute = require('./Services/users_services');
+const teamInfoRoute = require('./Services/teamInfo_services');
+const statRoute = require('./Services/stat_services');
+const playerRoute = require('./Services/player_services');
+const gameRoute = require('./Services/game_services');
 
 
 const store = new MongoDBSession({
@@ -90,3 +90,5 @@ app.use(bodyParser.json());
 app.use('/auth',authRoute);
 app.use('/users',userRoute);
 app.use('/stat',statRoute);
+app.use('/game',gameRoute);
+app.use('/teams',teamInfoRoute);

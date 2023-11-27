@@ -1,8 +1,6 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
 
-const userRoles = ['ADMIN', 'OWNER', 'COACH'];
-
 const UserSchema = new Schema ({
     username: {
         type: String,
@@ -12,21 +10,21 @@ const UserSchema = new Schema ({
         require: [true, "Username is required"],
     },
 
-    nom: {
+    firstName: {
         type: String,
         unique: true,
 
         require: [true, "Nom is required"],
     },
 
-    telephone : {
+    phoneNumber : {
         type: String,
         unique: true,
 
         require: [true, "Telephone is required"],
     },
 
-    prenom: {
+    lastName: {
         type: String,
         unique: true,
 
@@ -40,12 +38,12 @@ const UserSchema = new Schema ({
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/,"Invalide email address"],
     },
 
-    ville : {
+    town : {
         type: String,
         require: [true, "Ville is required"],
     },
 
-    quartier : {
+    neighborhood : {
         type: String,
         require: [true, "Quartier is required"],
     },
@@ -59,29 +57,28 @@ const UserSchema = new Schema ({
         require: false,
     },
 
-    profil_picture: {
+    profilePicture: {
         type: String,
         require: false,
     },
 
-    created_at: {
+    createdAt: {
         type: Date,
         require: false,
     },
 
-    is_deleted: {
+    isDeleted: {
         type: Date,
         require: false,
     },
 
-    is_active: {
+    isActive: {
         type: Boolean,
         require: true,
     },
 
     role: {
         type: String,
-        enum: userRoles,
         require: true,
     }
 });

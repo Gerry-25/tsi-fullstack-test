@@ -22,8 +22,8 @@ const TeamInfoSchema = new Schema ({
         require: true,
     },
 
-    created_at : {
-        type: Date,
+    createdAt : {
+        type: String,
         require: true,
     }
 });
