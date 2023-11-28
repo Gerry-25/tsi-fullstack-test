@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { eachMonthOfInterval } from 'date-fns';
+import axios from 'axios';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -128,12 +130,18 @@ export const AuthProvider = (props) => {
   };
 
   const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
+    const response = await axios.post(`http://localhost:3005/auth/login`, {
+      email: email,
+      password: password
+    });
+    if (response.status != 200) {
       throw new Error('Please check your email and password');
     }
 
     try {
       window.sessionStorage.setItem('authenticated', 'true');
+      window.sessionStorage.setItem('token', response.data.token);
+      window.sessionStorage.setItem('user', JSON.stringify(response.data.user));
     } catch (err) {
       console.error(err);
     }

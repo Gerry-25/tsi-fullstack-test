@@ -126,4 +126,15 @@ router.get('/getPlayerAverage/:playerId',verifyToken,async(req,res)=>{
       res.status(500).json({ status: 500, message: 'Internal Server Error' });
     }
   });
+
+  router.get('/totalStat',verifyToken,async(req,res)=>{
+    if(!req.user)
+    {
+        res.status(404).json({message: "Invalid Token"});
+    }else {
+    const result = await StatModel.find().exec();
+    const totalStat = result.length;
+    res.status(200).json({totalStat});
+}
+});
 module.exports = router;

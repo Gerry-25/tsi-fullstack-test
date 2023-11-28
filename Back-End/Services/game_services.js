@@ -30,6 +30,17 @@ router.get('/allGame',verifyToken,async(req,res)=>{
 }
 });
 
+router.get('/totalGame',verifyToken,async(req,res)=>{
+    if(!req.user)
+    {
+        res.status(404).json({status:404,message: "Invalid Token"});
+    }else {
+    const result = await GameModel.find().exec();
+    const totalGame = result.length;
+    res.status(200).json({totalGame});
+}
+});
+
 router.get('/allGameWin',verifyToken,async(req,res)=>{
     if(!req.user)
     {
@@ -40,6 +51,17 @@ router.get('/allGameWin',verifyToken,async(req,res)=>{
 }
 });
 
+router.get('/totalGameWin',verifyToken,async(req,res)=>{
+    if(!req.user)
+    {
+        res.status(404).json({status:404,message: "Invalid Token"});
+    }else {
+    const result = await GameModel.find().where({winOrLose: true}).exec();
+    const totalGameWin = result.length;
+    res.status(200).json({totalGameWin});
+}
+});
+
 router.get('/allGameLose',verifyToken,async(req,res)=>{
     if(!req.user)
     {
@@ -47,6 +69,17 @@ router.get('/allGameLose',verifyToken,async(req,res)=>{
     }else {
     const result = await GameModel.find().where({winOrLose: false}).exec();
     res.status(200).json({status:200,result});
+}
+});
+
+router.get('/totalGameLoose',verifyToken,async(req,res)=>{
+    if(!req.user)
+    {
+        res.status(404).json({status:404,message: "Invalid Token"});
+    }else {
+    const result = await GameModel.find().where({winOrLose: false}).exec();
+    const totalGameLoose = result.length;
+    res.status(200).json({totalGameLoose});
 }
 });
 

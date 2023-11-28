@@ -35,6 +35,17 @@ router.get('/allPlayer',verifyToken,async(req,res)=>{
 }
 });
 
+router.get('/totalPlayer',verifyToken,async(req,res)=>{
+    if(!req.user)
+    {
+        res.status(404).json({message: "Invalid Token"});
+    }else {
+    const result = await PlayerModel.find().exec();
+    const totalPlayer = result.length;
+    res.status(200).json({totalPlayer});
+}
+});
+
 
 
 router.put('/updatePlayerInfo/:playerId',verifyToken,async(req,res)=>{

@@ -1,64 +1,85 @@
 import PropTypes from 'prop-types';
-import ListBulletIcon from '@heroicons/react/24/solid/ListBulletIcon';
-import {
-  Avatar,
-  Box,
-  Card,
-  CardContent,
-  LinearProgress,
-  Stack,
-  SvgIcon,
-  Typography
-} from '@mui/material';
+import ArrowDownIcon from '@heroicons/react/24/solid/ArrowDownIcon';
+import ArrowUpIcon from '@heroicons/react/24/solid/ArrowUpIcon';
+import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
+import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
 
 export const TotalWin = (props) => {
-  const { value, sx } = props;
+    const { difference, positive = false, sx, value } = props;
 
-  return (
-    <Card sx={sx}>
-      <CardContent>
-        <Stack
-          alignItems="flex-start"
-          direction="row"
-          justifyContent="space-between"
-          spacing={3}
-        >
-          <Stack spacing={1}>
-            <Typography
-              color="text.secondary"
-              gutterBottom
-              variant="overline"
-            >
-              Total Games win
-            </Typography>
-            <Typography variant="h4">
-              {value}
-            </Typography>
-          </Stack>
-          <Avatar
-            sx={{
-              backgroundColor: 'warning.main',
-              height: 56,
-              width: 56
-            }}
+    return (
+      <Card sx={sx}>
+        <CardContent>
+          <Stack
+            alignItems="flex-start"
+            direction="row"
+            justifyContent="space-between"
+            spacing={3}
           >
-            <SvgIcon>
-              <ListBulletIcon />
-            </SvgIcon>
-          </Avatar>
-        </Stack>
-        <Box sx={{ mt: 3 }}>
-          <LinearProgress
-            value={value}
-            variant="determinate"
-          />
-        </Box>
-      </CardContent>
-    </Card>
-  );
+            <Stack spacing={1}>
+              <Typography
+                color="text.secondary"
+                variant="overline"
+              >
+                Total win
+              </Typography>
+              <Typography variant="h4">
+                {value}
+              </Typography>
+            </Stack>
+            <Avatar
+              sx={{
+                backgroundColor: 'success.main',
+                height: 56,
+                width: 56
+              }}
+            >
+              <SvgIcon>
+                <UsersIcon />
+              </SvgIcon>
+            </Avatar>
+          </Stack>
+          {difference && (
+            <Stack
+              alignItems="center"
+              direction="row"
+              spacing={2}
+              sx={{ mt: 2 }}
+            >
+              <Stack
+                alignItems="center"
+                direction="row"
+                spacing={0.5}
+              >
+                <SvgIcon
+                  color={positive ? 'success' : 'error'}
+                  fontSize="small"
+                >
+                  {positive ? <ArrowUpIcon /> : <ArrowDownIcon />}
+                </SvgIcon>
+                <Typography
+                  color={positive ? 'success.main' : 'error.main'}
+                  variant="body2"
+                >
+                  {difference}%
+                </Typography>
+              </Stack>
+              <Typography
+                color="text.secondary"
+                variant="caption"
+              >
+                Since last month
+              </Typography>
+            </Stack>
+          )}
+        </CardContent>
+      </Card>
+    );
 };
 
 TotalWin.propTypes = {
-  value: PropTypes.number.isRequired,
-  sx: PropTypes.object
+    difference: PropTypes.number,
+    positive: PropTypes.bool,
+    value: PropTypes.string.isRequired,
+    sx: PropTypes.object
 };

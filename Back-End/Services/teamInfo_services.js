@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TeamModel = require('../Models/team');
-const PlayerModel = require('../Models/player');
+const PlayerModel = require('../Models/players');
 const verifyToken = require('../Middlewares/middleware');
 
 router.post('/createTeamProfil',verifyToken,async(req,res)=>{

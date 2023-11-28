@@ -110,7 +110,7 @@ router.post('/login',async (req,res)=>{
         res.send({status:404, message: "Bad credential"});
     } else {
   const token = generateAccessToken({id: user.id},{username: user.username});
-    res.send({status:200,message: "Login with succes",token, user});
+    res.status(200).json({message: "Login with success",token, user});
         }
       }
     }

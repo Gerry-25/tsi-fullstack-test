@@ -23,7 +23,7 @@ export const OverviewBudget = (props) => {
             >
               Total budget
             </Typography>
-            <Typography variant="h4">
+            <Typography variant="h5">
               {value}
             </Typography>
           </Stack>
