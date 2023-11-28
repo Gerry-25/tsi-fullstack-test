@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TeamModel = require('../Models/team');
+const PlayerModel = require('../Models/player');
 const verifyToken = require('../Middlewares/middleware');
 
 router.post('/createTeamProfil',verifyToken,async(req,res)=>{
@@ -44,5 +45,35 @@ router.get('/teamInfo/:teamId',verifyToken,async(req,res)=>{
     res.send({status:200,result});
 }
 });
+
+router.get('/teamTotalPlayer',verifyToken,async(req,res)=>{
+    if(!req.user)
+    {
+        res.send({status:404,message: "Invalid Token"});
+    }else {
+    const allPlayer = await PlayerModel.find().exec();
+    const number = allPlayer.length;
+    res.send({status:200,number});
+}
+});
+
+router.get('/teamSalary', verifyToken, async (req, res) => {
+    try {
+      if (!req.user) {
+        res.status(404).json({ message: 'Invalid Token' });
+      } else {
+        const players = await PlayerModel.find().exec();
+        if (!players || players.length === 0) {
+          res.status(404).json({ message: 'No players found' });
+          return;
+        }  
+        const totalSalary = players.reduce((sum, player) => sum + (player.salary || 0), 0);
+        res.status(200).json({ totalSalary });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 500, message: 'Internal Server Error' });
+    }
+  });
 
 module.exports = router;

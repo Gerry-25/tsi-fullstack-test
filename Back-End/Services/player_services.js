@@ -35,6 +35,8 @@ router.get('/allPlayer',verifyToken,async(req,res)=>{
 }
 });
 
+
+
 router.put('/updatePlayerInfo/:playerId',verifyToken,async(req,res)=>{
     if(!req.user)
     {
