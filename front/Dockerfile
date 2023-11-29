@@ -14,5 +14,5 @@ RUN npm install
 COPY . .
 
 # Build the React app
-RUN npm run dev
+RUN npm run build
 

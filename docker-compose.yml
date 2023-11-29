@@ -6,9 +6,16 @@ services:
     build:
       context: ./back-End
       dockerfile: Dockerfile
+    networks:
+      - tsi-network
     restart: always
     ports:
       - "3005:3005"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3005/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   react-app:
     image: frontend-image
@@ -16,8 +23,16 @@ services:
     build:
       context: ./front
       dockerfile: Dockerfile
+    networks:
+      - tsi-network
     restart: always
     ports:
       - "3000:3000"
     depends_on:
-      - express-app
+      express-app:
+        condition: service_healthy
+
+networks:
+  tsi-network:
+    driver: bridge
+

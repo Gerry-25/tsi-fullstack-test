@@ -5,13 +5,17 @@ Pull the code in your localstorage
 
 Enter this following command :
 
-cd Back-End
+cd back-End
 
 mv env .env
 
+npm run dev
+
 cd ..
 
-docker compose up --build -d
+cd front-end
+
+npm run dev
 
 
 Go to your browser and paste this link : http://localhost:3000
