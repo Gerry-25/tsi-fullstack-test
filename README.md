@@ -1,6 +1,8 @@
 # tsi-fullstack-test
 TSI Fullstack web developper test
 
+Pull the code in your localstorage
+
 Enter this following command :
 
 cd Back-End
