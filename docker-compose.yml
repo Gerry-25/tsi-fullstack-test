@@ -6,8 +6,6 @@ services:
     build:
       context: ./Back-End
       dockerfile: Dockerfile
-    networks:
-      - tsi-network
     restart: always
     ports:
       - "3005:3005"
@@ -18,8 +16,6 @@ services:
     build:
       context: ./Front
       dockerfile: Dockerfile
-    networks:
-      - tsi-network
     restart: always
     ports:
       - "3000:3000"
