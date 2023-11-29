@@ -167,7 +167,7 @@ function AddModal({ visible, closeAddModal }) {
                 </FormControl>
 
                 <FormControl variant="filled" fullWidth style={{ marginBottom: 20 }}>
-                    <InputLabel id="gameId-label">Player</InputLabel>
+                    <InputLabel id="gameId-label">Game</InputLabel>
                     <Select
                         labelId="gameId-label"
                         id="gameId"
