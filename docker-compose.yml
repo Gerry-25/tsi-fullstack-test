@@ -1,21 +1,27 @@
 version: '3'
 services:
   express-app:
-    image: back-image
+    image: backEnd-image
     container_name: express-container
+    build:
+      context: ./Back-End
+      dockerfile: Dockerfile
+    networks:
+      - tsi-network
+    restart: always
     ports:
       - "3005:3005"
-    environment:
-      - NODE_ENV=production
-    depends_on:
-      - mongo-db
 
   react-app:
-    image: front-image
+    image: frontEnd-image
     container_name: react-container
+    build:
+      context: ./Front
+      dockerfile: Dockerfile
+    networks:
+      - tsi-network
+    restart: always
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
     depends_on:
       - express-app

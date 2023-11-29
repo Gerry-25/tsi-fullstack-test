@@ -7,13 +7,7 @@ Enter this following command :
 
 cd Back-End
 
-sudo docker build -t back-image .
-
-cd ..
-
-cd Front
-
-sudo docker build -t front-image .
+mv env .env
 
 cd ..
 
