@@ -26,7 +26,7 @@ router.get('/allGame',verifyToken,async(req,res)=>{
         res.status(404).json({status:404,message: "Invalid Token"});
     }else {
     const result = await GameModel.find().exec();
-    res.status(200).json({status:200,result});
+    res.status(200).json({result});
 }
 });
 

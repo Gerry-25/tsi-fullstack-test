@@ -6,10 +6,10 @@ function AddModal({ visible, closeAddModal }) {
     const token = window.sessionStorage.getItem('token');
     const [errors, setErrors] = useState({});
     const [game, setGame] = useState({
-        opponent: '',
-        winOrLose: '',
-        score: '',
-        gameDate: ''
+        opponent:'', 
+        winOrLose:'', 
+        score:'', 
+        gameDate:''
     });
 
 
@@ -17,10 +17,10 @@ function AddModal({ visible, closeAddModal }) {
     const init = () => {
         setErrors({});
         setGame({
-            opponent: '',
-        winOrLose: '',
-        score: '',
-        gameDate: ''
+        opponent:'', 
+        winOrLose:'', 
+        score:'', 
+        gameDate:''
         });
         closeAddModal();
     };
@@ -30,19 +30,19 @@ function AddModal({ visible, closeAddModal }) {
 
         // Vérifier les champs requis
         if (!game.opponent) {
-            newErrors.opponent = 'Opponent is required';
+            newErrors.opponent = 'Requis.';
         }
 
         if (!game.winOrLose) {
-            newErrors.winOrLose = 'State is required';
+            newErrors.winOrLose = 'Requis.';
         }
 
         if (!game.score) {
-            newErrors.username = 'Score is required';
+            newErrors.score = 'Requis.';
         }
 
         if (!game.gameDate) {
-            newErrors.gameDate = 'The game date is required';
+            newErrors.gameDate = 'Requis.';
         }
 
         setErrors(newErrors);
@@ -51,132 +51,75 @@ function AddModal({ visible, closeAddModal }) {
         return Object.keys(newErrors).length === 0;
     };
 
-
     const handleSaveAdd = async () => {
         const isValid = validateFields();
 
         if (isValid) {
             // Appel de l'API pour ajouter l'utilisateur
             try {
-                const response = await services.addUser(token, user);
+                const response = await services.addGame(token, game);
                 // Traiter la réponse si nécessaire
-                console.log('Données utilisateur ajoutées avec succès :', response);
+                console.log('Game add with success :', response);
                 init();
             } catch (error) {
-                console.error('Erreur lors de l\'ajout de l\'utilisateur :', error);
+                console.error('Error when adding players :', error);
             }
         }
     };
 
     return (
         <Dialog open={visible} onClose={closeAddModal}>
-            <DialogTitle>Ajouter un utilisateur</DialogTitle>
+            <DialogTitle>Add game</DialogTitle>
             <DialogContent style={{ width: 600 }}>
                 <div style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
                     <TextField
-                        label="Prénom"
+                        label="Opponent"
                         variant="filled"
                         fullWidth
-                        name="firstName"
-                        value={user.firstName}
-                        error={errors.firstName}
-                        helperText={errors.firstName}
-                        onChange={(e) => setUser({ ...user, firstName: e.target.value })}
+                        name="opponent"
+                        value={game.opponent}
+                        error={errors.opponent}
+                        helperText={errors.opponent}
+                        onChange={(e) => setGame({ ...game, opponent: e.target.value })}
                     />
                     <TextField
-                        label="Nom"
+                        label="Date"
                         variant="filled"
                         fullWidth
-                        name="lastName"
-                        value={user.lastName}
-                        error={errors.lastName}
-                        helperText={errors.lastName}
-                        onChange={(e) => setUser({ ...user, lastName: e.target.value })}
+                        name="gameDate"
+                        value={game.gameDate}
+                        error={errors.gameDate}
+                        helperText={errors.gameDate}
+                        onChange={(e) => setGame({ ...game, gameDate: e.target.value })}
                     />
                 </div>
-                <TextField
-                    label="Nom d'utilisateur"
-                    variant="filled"
-                    fullWidth
-                    name="username"
-                    value={user.username}
-                    error={errors.username}
-                    helperText={errors.username}
-                    onChange={(e) => setUser({ ...user, username: e.target.value })}
-                    style={{ marginBottom: 20 }}
-                />
-                <TextField
-                    label="Email"
-                    variant="filled"
-                    fullWidth
-                    type="email"
-                    name="email"
-                    value={user.email}
-                    error={errors.email}
-                    helperText={errors.email}
-                    onChange={(e) => setUser({ ...user, email: e.target.value })}
-                    style={{ marginBottom: 20 }}
-                />
-                <TextField
-                    label="Mot de passe"
-                    variant="filled"
-                    fullWidth
-                    type="password"
-                    name="password"
-                    value={user.password}
-                    error={errors.password}
-                    helperText={errors.password}
-                    onChange={(e) => setUser({ ...user, password: e.target.value })}
-                    style={{ marginBottom: 20 }}
-                />
+               
                 <div style={{ display: 'flex', gap: 20, marginBottom: 20 }}>
+                    
                     <TextField
-                        label="Numéro de téléphone"
+                        label="Score"
                         variant="filled"
                         fullWidth
-                        name="phoneNumber"
-                        value={user.phoneNumber}
-                        error={errors.phoneNumber}
-                        helperText={errors.phoneNumber || "Example: 22997979797"}
-                        onChange={(e) => {
-                            const input = e.target.value;
-                            // Utiliser une expression régulière pour ne permettre que les chiffres
-                            const regex = /^[0-9]*$/;
-                            if (regex.test(input)) {
-                                setUser({ ...user, phoneNumber: input });
-                                // Réinitialiser l'erreur lorsque l'utilisateur tape dans le champ
-                                setErrors({ ...errors, phoneNumber: false });
-                            } else {
-                                // Afficher une erreur si l'entrée n'est pas un nombre valide
-                                setErrors({ ...errors, phoneNumber: true });
-                            }
-                        }}
-                    />
-                    <TextField
-                        label="Adresse"
-                        variant="filled"
-                        fullWidth
-                        name="address"
-                        value={user.address}
-                        error={errors.address}
-                        helperText={errors.address}
-                        onChange={(e) => setUser({ ...user, address: e.target.value })}
+                        name="score"
+                        value={game.score}
+                        error={errors.score}
+                        helperText={errors.birthDate}
+                        onChange={(e) => setGame({ ...game, score: e.target.value })}
                     />
                 </div>
                 <FormControl variant="filled" fullWidth style={{ marginBottom: 20 }}>
-                    <InputLabel id="role-label">Rôle</InputLabel>
+                    <InputLabel id="winOrLose-label">Win or Loose</InputLabel>
                     <Select
-                        labelId="role-label"
-                        id="role"
-                        name="role"
-                        value={user.role}
-                        error={errors.role}
-                        onChange={(e) => setUser({ ...user, role: e.target.value })}
+                        labelId="winOrLoose-label"
+                        id="winOrLose"
+                        name="winOrLose"
+                        value={game.winOrLose}
+                        error={errors.winOrLose}
+                        onChange={(e) => setGame({ ...game, winOrLose: e.target.value })}
                     >
-                        <MenuItem value="">Sélectionner un rôle</MenuItem>
-                        <MenuItem value="ADMIN">Admin</MenuItem>
-                        <MenuItem value="OUVRIER_POULLAILLER">Ouvrier</MenuItem>
-                        <MenuItem value="GESTIONNAIRE">Gestionnaire</MenuItem>
+                        <MenuItem value="">Choose a position</MenuItem>
+                        <MenuItem value="true">Win</MenuItem>
+                        <MenuItem value="false">Loose</MenuItem>
                     </Select>
                 </FormControl>
             </DialogContent>

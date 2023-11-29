@@ -4,7 +4,7 @@ import { Box, Button, Container, SvgIcon, Typography, Stack } from "@mui/materia
 import PlusIcon from "@heroicons/react/24/solid/PlusIcon";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import services from "src/services";
-import PlayerStat from "src/sections/tables/stat-table";
+import AverageStat from "src/sections/tables/average-table";
 import AddModal from "src/sections/stat/AddModal";
 
 const Page = () => {
@@ -32,12 +32,11 @@ const Page = () => {
 
   const fetchData = async () => {
     try {
-      const response = await services.getAllStat(token);
+      const response = await services.getAllStatAverage(token);
 
       if (response.status === 200) {
-        setData(response.data.result);
+        setData(response.data.playerAverages);
       }
-      console.log(data);
     } catch (error) {
       // Gérer les erreurs liées à l'appel API ici
       console.error("Erreur lors de la récupération des données :", error);
@@ -71,26 +70,14 @@ const Page = () => {
               >
                 {/* Titre de la page */}
                 <Typography variant="h5" color="#79D302" gutterBottom>
-                  List of all stat
+                  List of average stat
                 </Typography>
                 {/* Bouton pour ouvrir la modal */}
-                <Button
-                  startIcon={
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  }
-                  variant="contained"
-                  style={{ backgroundColor: "#79D302" }}
-                  onClick={toggleAddModal}
-                >
-                  Add new stat
-                </Button>
               </Stack>
             </Stack>
 
             {/* Tableau de données */}
-            <PlayerStat
+            <AverageStat
               count={data.length}
               items={data}
               page={page}
@@ -100,9 +87,6 @@ const Page = () => {
               fetchData={fetchData}
               loading={loading}
             />
-
-            {/* Modal pour ajouter une constante */}
-            <AddModal visible={addModalOpen} closeAddModal={toggleAddModal} />
           </Stack>
         </Container>
       </Box>

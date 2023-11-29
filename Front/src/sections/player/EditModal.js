@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import services from 'src/services';
 
@@ -23,6 +23,9 @@ function EditModal({ visible, closeEditModal,data }) {
             endContract: data.endContract ||"", 
             salary:data.salary || 0        });
     };
+
+    useEffect(() => { init() }, [visible])
+
 
     const validateFields = () => {
         const newErrors = {};
@@ -75,7 +78,7 @@ function EditModal({ visible, closeEditModal,data }) {
                 const response = await services.updatePlayer(token, data._id, player);
                 // Traiter la réponse si nécessaire
                 console.log('Player update with success :', response);
-                init();
+                closeEditModal();
             } catch (error) {
                 console.error('Error when updating players :', error);
             }

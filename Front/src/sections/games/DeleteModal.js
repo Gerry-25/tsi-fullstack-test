@@ -11,7 +11,7 @@ function DeleteModal({ visible, closeModal, data, refresh }) {
             <DialogTitle>{'Etes-vous sûre ?'}</DialogTitle>
             <DialogActions>
                 <Button variant="contained" color="primary" onClick={() => {
-                    services.deleteUser(token, data._id)
+                    services.deleteGame(token, data._id)
                     closeModal()
                     refresh()
                 }}>

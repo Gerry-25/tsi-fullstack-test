@@ -13,6 +13,14 @@ const StatSchema = new Schema ({
         require: true,
     },
 
+    game : {
+        type: String,
+    },
+
+    player : {
+        type: String,
+    },
+
     minute : {
         type: Number,
         require: true,
